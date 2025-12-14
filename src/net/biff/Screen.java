@@ -16,7 +16,7 @@ public class Screen extends JPanel {
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        organelles.forEach(x->x.draw(g2d));
+        organelles.forEach(x -> {if (x.visible) {x.draw(g2d);}});
         g2d.dispose();
         g.dispose();
     }
