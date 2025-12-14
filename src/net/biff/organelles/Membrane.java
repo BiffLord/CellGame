@@ -9,8 +9,8 @@ public class Membrane extends Organelle{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setStroke(new BasicStroke(10.0f));
-        g2d.drawOval(200,200,400,400);
+        g2d.setStroke(stroke);
+        g2d.draw(hitbox);
 
     }
 }
