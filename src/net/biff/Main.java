@@ -1,8 +1,6 @@
 package net.biff;
 
-import net.biff.organelles.Membrane;
-import net.biff.organelles.Mitochondrion;
-import net.biff.organelles.Organelle;
+import net.biff.organelles.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -13,6 +11,7 @@ public class Main{
         List<Organelle> organelles = new ArrayList<>();
         organelles.add(new Membrane());
         organelles.add(new Mitochondrion(-45,450,500));
+        organelles.add(new Nucleus());
         JFrame window = new JFrame("Cell Game");
         window.setSize(800,800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
