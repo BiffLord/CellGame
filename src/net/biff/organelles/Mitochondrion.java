@@ -2,6 +2,7 @@ package net.biff.organelles;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Mitochondrion extends Organelle{
         matrixComponent(-47,-12.5);
 
         matrix = matrix.stream().map(rotator::createTransformedShape).collect(Collectors.toList());
-        hitbox = rotator.createTransformedShape(ellipse);
+        hitbox = new Area(rotator.createTransformedShape(ellipse));
     }
 
     @Override

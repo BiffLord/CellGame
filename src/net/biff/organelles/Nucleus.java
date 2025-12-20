@@ -1,12 +1,13 @@
 package net.biff.organelles;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 public class Nucleus extends Organelle{
     Ellipse2D nucleolis;
     public Nucleus() {
-        hitbox = new Ellipse2D.Double(325,325,150,150);
+        hitbox = new Area(new Ellipse2D.Double(325,325,150,150));
         nucleolis = new Ellipse2D.Double(387.5,387.5,25,25);
     }
 
