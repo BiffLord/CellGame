@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Membrane extends Organelle{
     public Membrane(){
-        hitbox = new Area(new Ellipse2D.Double(150,150,500,500));
+        hitbox = new Ellipse2D.Double(150,150,500,500);
         visible = true;
     }
     @Override
