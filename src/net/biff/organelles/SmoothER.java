@@ -3,15 +3,14 @@ package net.biff.organelles;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.geom.Ellipse2D;
 
 public class SmoothER extends Organelle{
-    private List<Shape> base = new ArrayList<>();
-    private List<Shape> tubes = new ArrayList<>();
+    private final List<Shape> tubes = new ArrayList<>();
     public SmoothER(){
+        //Exceptionaly Based
         Shape based = oval(250,200,150,75,-45d);
         Area hb = new Area(based);
         based = oval(170,300,175,75,-70d);
@@ -48,7 +47,7 @@ public class SmoothER extends Organelle{
 
     }
     private Shape oval(int x, int y, int width, int height, double angle){
-        Ellipse2D circle = new Ellipse2D.Double(x-width/2,y-height/2,width,height);
+        Ellipse2D circle = new Ellipse2D.Double(x- (double) width /2,y- (double) height /2,width,height);
         AffineTransform rotator = AffineTransform.getRotateInstance(Math.toRadians(angle),
                circle.getCenterX(), circle.getCenterY());
         return rotator.createTransformedShape(circle);
