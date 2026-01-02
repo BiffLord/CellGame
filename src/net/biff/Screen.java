@@ -40,6 +40,7 @@ public class Screen extends JPanel implements Runnable{
             g2d.draw(organelles.get(4).hitbox);
             g2d.setColor(Color.GREEN);
             g2d.draw(organelles.get(3).hitbox);*/
+            organelles.get(5).draw(g2d);
             g2d.dispose();
             g.dispose();
     }

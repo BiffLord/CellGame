@@ -14,6 +14,7 @@ public class Main{
         organelles.add(new Nucleus());
         organelles.add(new RoughER());
         organelles.add(new SmoothER());
+        organelles.add(new Lysosome(550,250));
         JFrame window = new JFrame("Cell Game");
         window.setSize(800,800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
