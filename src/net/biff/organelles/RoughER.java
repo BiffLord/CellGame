@@ -56,32 +56,32 @@ public class RoughER extends Organelle implements Ribosomal{
         createRibosome(338,480);
         createRibosome(400,550);
         createRibosome(350,535);
-        Rectangle2D hitboxA = new Rectangle2D.Double(250,250,100,100);
-        Area hb = new Area(hitboxA);
-        hitboxA = new Rectangle2D.Double(300,200,100,110);
-        hb.add(new Area(hitboxA));
+        Rectangle2D hitboxSection = new Rectangle2D.Double(250,250,100,100);
+        Area hb = new Area(hitboxSection);
+        hitboxSection = new Rectangle2D.Double(300,200,100,110);
+        hb.add(new Area(hitboxSection));
         Ellipse2D hitboxB = new Ellipse2D.Double(400,225,50,50);
         hb.add(new Area(hitboxB));
-        hitboxA = new Rectangle2D.Double(350,290,80,35);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(200,300,50,100);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(180,350,40,75);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(225,275,25,25);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(250,350,75,100);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(200,400,100,100);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(300,450,50,100);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(350,468,50,82);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(400,490,40,25);
-        hb.add(new Area(hitboxA));
-        hitboxA = new Rectangle2D.Double(380,540,40,25);
-        hb.add(new Area(hitboxA));
+        hitboxSection = new Rectangle2D.Double(350,290,80,35);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(200,300,50,100);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(180,350,40,75);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(225,275,25,25);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(250,350,75,100);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(200,400,100,100);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(300,450,50,100);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(350,468,50,82);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(400,490,40,25);
+        hb.add(new Area(hitboxSection));
+        hitboxSection = new Rectangle2D.Double(380,540,40,25);
+        hb.add(new Area(hitboxSection));
         hitbox = hb;
     }
     private Shape rotate(Double degrees, Ellipse2D shape){
@@ -100,6 +100,5 @@ public class RoughER extends Organelle implements Ribosomal{
         sacs.forEach(g2d::fill);
         g2d.setColor(Color.BLACK);
         ribosomes.forEach(g2d::fill);
-        g2d.setColor(Color.GREEN);
     }
 }
