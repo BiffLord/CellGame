@@ -5,9 +5,12 @@ import java.awt.*;
 public abstract class Organelle {
     public Shape hitbox;
     public boolean visible = true;
+    public static BasicStroke smallestStroke = new BasicStroke(1f);
     public static BasicStroke smallStroke = new BasicStroke(7f);
     public static BasicStroke stroke = new BasicStroke(10.0f);
     public static BasicStroke smallerStroke = new BasicStroke(5f);
 
-    public abstract void draw(Graphics2D g2d);
+    public void draw(Graphics2D g2d){
+        g2d.fill(hitbox);
+    }
 }
