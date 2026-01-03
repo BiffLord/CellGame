@@ -15,6 +15,7 @@ public class Ribosome extends Organelle implements Ribosomal{
     }
     @Override
     public void draw(Graphics2D g2d){
+        g2d.setColor(Color.BLACK);
         ribosomes.forEach(g2d::draw);
     }
 }
