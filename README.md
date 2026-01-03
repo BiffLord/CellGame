@@ -10,6 +10,10 @@ A game about cells
   * Neucleus (I can't spell)
   * RER
   * SER (These last two have left me dead help lol)
+  * Golgi Aparatus
+  * Ribosomes
+  * Lysosomes
+  * Centriole
 ## Parts-to be
 * Protien Synthesis
 * Organelles & Function (animal Cell)
