@@ -13,6 +13,7 @@ public class Screen extends JPanel implements Runnable{
     private final boolean guides = !false;
 
     public Screen(List<Organelle> orgs){
+        setBackground(Color.WHITE);
         this.organelles = orgs;
         gameLoop = new Thread(this);
         gameLoop.start();
@@ -27,22 +28,18 @@ public class Screen extends JPanel implements Runnable{
 
     @Override
     protected void paintComponent(Graphics g){
-            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-
-            organelles.forEach(x -> {
-                if (x.visible) {
-                    x.draw(g2d);
-                }
-            });
-            if (guides) {guide(g2d);}
-            /*g2d.setColor(Color.ORANGE);
-            g2d.draw(organelles.get(4).hitbox);
-            g2d.setColor(Color.GREEN);
-            g2d.draw(organelles.get(3).hitbox);*/
-            organelles.get(5).draw(g2d);
-            g2d.dispose();
-            g.dispose();
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        organelles.forEach(x -> {
+            if (x.visible) {
+                x.draw(g2d);
+            }
+        });
+        if (guides) {guide(g2d);}
+        //g2d.setColor(Color.ORANGE);
+        //g2d.draw(organelles.get(6).hitbox);
+        g2d.dispose();
+        g.dispose();
     }
 
     @Override
