@@ -35,6 +35,7 @@ public class Screen extends JPanel implements Runnable{
                 x.draw(g2d);
             }
         });
+        //organelles.forEach(x->g2d.draw(x.hitbox));
         if (guides) {guide(g2d);}
         //g2d.setColor(Color.ORANGE);
         //g2d.draw(organelles.get(6).hitbox);

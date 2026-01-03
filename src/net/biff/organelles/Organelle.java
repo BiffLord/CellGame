@@ -10,7 +10,5 @@ public abstract class Organelle {
     public static BasicStroke stroke = new BasicStroke(10.0f);
     public static BasicStroke smallerStroke = new BasicStroke(5f);
 
-    public void draw(Graphics2D g2d){
-        g2d.fill(hitbox);
-    }
+    public abstract void draw(Graphics2D g2d);
 }
