@@ -10,7 +10,7 @@ import java.lang.Runnable;
 public class Screen extends JPanel implements Runnable{
     private final List<Organelle> organelles;
     public Thread gameLoop;
-    private final boolean guides = false;
+    private final boolean guides = !false;
 
     public Screen(List<Organelle> orgs){
         setBackground(Color.WHITE);
@@ -39,6 +39,7 @@ public class Screen extends JPanel implements Runnable{
         if (guides) {guide(g2d);}
         //g2d.setColor(Color.ORANGE);
         //g2d.draw(organelles.get(6).hitbox);
+        //organelles.forEach(x->g2d.draw(x.hitbox));
         g2d.dispose();
         g.dispose();
     }

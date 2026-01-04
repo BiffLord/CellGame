@@ -16,9 +16,9 @@ public class Main{
         organelles.add(new SmoothER());
         organelles.add(new Lysosome(550,250));
         organelles.add(new GolgiApparatus(587.5f,400));
-        organelles.add(new Centriole(400,150));
-        organelles.add(new Centriole(400,650));
+        organelles.add(new Centriole(375,150));
         organelles.add(new Ribosome(425,505));
+        organelles.add(new Vacuole(475,175));
         JFrame window = new JFrame("Cell Game");
         window.setSize(800,800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
