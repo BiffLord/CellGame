@@ -10,7 +10,7 @@ import java.lang.Runnable;
 public class Screen extends JPanel implements Runnable{
     private final List<Organelle> organelles;
     public Thread gameLoop;
-    private final boolean guides = !false;
+    private final boolean guides = false;
 
     public Screen(List<Organelle> orgs){
         setBackground(Color.WHITE);

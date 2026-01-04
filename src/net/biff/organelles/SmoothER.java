@@ -38,7 +38,7 @@ public class SmoothER extends Organelle{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(147,168,250));
+        g2d.setColor(new Color(82, 117, 198));
         g2d.fill(hitbox);
         tubes.forEach(g2d::fill);
         g2d.setColor(Color.BLACK);

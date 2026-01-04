@@ -9,6 +9,7 @@ import java.util.List;
 public class Main{
     public static void main(String[] args) {
         List<Organelle> organelles = new ArrayList<>();
+        organelles.add(new Cytoplasm());
         organelles.add(new Membrane());
         organelles.add(new Mitochondrion(-45,525,575));
         organelles.add(new Nucleus());

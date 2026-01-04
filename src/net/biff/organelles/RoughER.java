@@ -96,7 +96,7 @@ public class RoughER extends Organelle implements Ribosomal{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(147,168,212));
+        g2d.setColor(new Color(85,106,150));
         sacs.forEach(g2d::fill);
         g2d.setColor(Color.BLACK);
         ribosomes.forEach(g2d::fill);

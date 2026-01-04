@@ -21,7 +21,7 @@ public class GolgiApparatus extends Organelle {
     @Override
     public void draw(Graphics2D g2d) {
         for (int i = 0; i < parts.size(); i++){
-            g2d.setColor((i%2==0 && i != 0)? Color.WHITE : Color.PINK);
+            g2d.setColor((i%2==0 && i != 0)?      new Color(147,168,212): Color.PINK);
             g2d.fill(parts.get(i));
         }
     }
