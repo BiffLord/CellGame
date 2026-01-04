@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 public class Cytoplasm extends Organelle{
+    private static final Color color = new Color(147,168,212);
     public Cytoplasm(){
         int radius = 600;
         int coordinate = 400 - radius/2;
@@ -11,7 +12,7 @@ public class Cytoplasm extends Organelle{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(147,168,212));
+        g2d.setColor(color);
         g2d.fill(hitbox);
     }
 }

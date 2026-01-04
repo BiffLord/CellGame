@@ -9,6 +9,7 @@ import java.awt.geom.Ellipse2D;
 
 public class SmoothER extends Organelle{
     private final List<Shape> tubes = new ArrayList<>();
+    private static final Color color = new Color(82, 117, 198);
     public SmoothER(){
         //Exceptionaly Based
         Shape based = oval(250,200,150,75,-45d);
@@ -38,7 +39,7 @@ public class SmoothER extends Organelle{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(82, 117, 198));
+        g2d.setColor(color);
         g2d.fill(hitbox);
         tubes.forEach(g2d::fill);
         g2d.setColor(Color.BLACK);

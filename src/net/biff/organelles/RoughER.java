@@ -11,7 +11,7 @@ import java.util.List;
 //Rough Endoplasmic Reticulum
 public class RoughER extends Organelle implements Ribosomal{
     private final List<Shape> sacs = new ArrayList<>();
-
+    private static final Color color = new Color(85,106,150);
     public RoughER(){
         sac(330,250,25,155,70d);
         sac(370,200,25,125,75d);
@@ -96,7 +96,7 @@ public class RoughER extends Organelle implements Ribosomal{
     }
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(85,106,150));
+        g2d.setColor(color);
         sacs.forEach(g2d::fill);
         g2d.setColor(Color.BLACK);
         ribosomes.forEach(g2d::fill);

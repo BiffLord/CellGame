@@ -1,12 +1,12 @@
 package net.biff.organelles;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GolgiApparatus extends Organelle {
+    private static final Color background = new Color(147,168,212);
     private List<Ellipse2D> parts = new ArrayList<>();
     public GolgiApparatus(float x, int y){
         parts.add(oval(x,y,37,200));
@@ -21,7 +21,7 @@ public class GolgiApparatus extends Organelle {
     @Override
     public void draw(Graphics2D g2d) {
         for (int i = 0; i < parts.size(); i++){
-            g2d.setColor((i%2==0 && i != 0)?      new Color(147,168,212): Color.PINK);
+            g2d.setColor((i%2==0 && i != 0)? background : Color.PINK);
             g2d.fill(parts.get(i));
         }
     }

@@ -21,37 +21,13 @@ public class Centriole extends Organelle{
     public void draw(Graphics2D g2d) {
         //bar -
         g2d.setStroke(smallestStroke);
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.fill(components.getFirst());
+        for (int i = 0; i < 4; i++){
+            g2d.setColor((i%2 == 0)? Color.DARK_GRAY : Color.GRAY);
+            g2d.fill(components.get(i));
+            g2d.setColor(Color.BLACK);
+            g2d.draw(components.get(i));
+        }
 
-        g2d.setColor(Color.BLACK);
-        g2d.draw(components.getFirst());
-
-        //🌕 -
-        g2d.setColor(Color.GRAY);
-        g2d.fill(components.get(1));
-
-        //o -
-        g2d.setColor(Color.BLACK);
-        g2d.draw(components.get(1));
-
-        //bar /
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.fill(components.get(2));
-
-        g2d.setColor(Color.BLACK);
-        g2d.draw(components.get(2));
-
-        //🌕 /
-        g2d.setColor(Color.GRAY);
-        g2d.fill(components.get(3));
-
-        //o /
-        g2d.setColor(Color.BLACK);
-        g2d.draw(components.get(3));
-
-        g2d.setStroke(smallestStroke);
-        g2d.setColor(Color.orange);
 
     }
     private Ellipse2D oval(float x, int y,int w, int h){

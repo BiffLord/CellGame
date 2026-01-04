@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class Mitochondrion extends Organelle{
     private List<Shape> matrix = new ArrayList<>();
+    private static final Color outerMembrane = new Color(204, 0,0);
+    private static final Color innerMembrane = new Color(152, 0,0);
     private double centerY;
     private double centerX;
     public Mitochondrion(double rotate, int x, int y) {
@@ -32,9 +34,9 @@ public class Mitochondrion extends Organelle{
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setStroke(smallStroke);
-        g2d.setColor(new Color(152, 0,0));
+        g2d.setColor(innerMembrane);
         g2d.fill(hitbox);
-        g2d.setColor(new Color(204, 0,0));
+        g2d.setColor(outerMembrane);
         g2d.draw(hitbox);
         matrix.forEach(g2d::fill);
 

@@ -6,6 +6,8 @@ import java.awt.geom.Ellipse2D;
 
 public class Nucleus extends Organelle{
     Ellipse2D nucleolis;
+    private static final Color neucleus = new Color(133, 29, 179);
+    private static final Color neucleolus = new Color(109, 19, 149);
     //Color
     public Nucleus() {
         hitbox = new Ellipse2D.Double(325,325,150,150);
@@ -14,9 +16,9 @@ public class Nucleus extends Organelle{
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(new Color(133, 29, 179));
+        g2d.setColor(neucleus);
         g2d.fill(hitbox);
-        g2d.setColor(new Color(109, 19, 149));
+        g2d.setColor(neucleolus);
         g2d.fill(nucleolis);
         g2d.setColor(Color.BLACK);
         g2d.draw(hitbox);
