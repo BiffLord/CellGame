@@ -4,17 +4,32 @@ import net.biff.organelles.Organelle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.lang.Runnable;
 
-public class Screen extends JPanel implements Runnable{
+public class Screen extends JPanel implements Runnable, MouseListener {
     private final List<Organelle> organelles;
     public Thread gameLoop;
     private final boolean guides = false;
+    Font font;
+    private String text = "You need ATP Energy. Click the Cytoplasm";
 
     public Screen(List<Organelle> orgs){
+        try{
+            InputStream fontFile = Screen.class.getResourceAsStream("/texgyretermes-regular.otf");
+            assert fontFile != null;
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, fontFile));
+        } catch (IOException | FontFormatException e) {
+            throw new RuntimeException(e);
+        }
+        this.font = new Font("texgyretermes-regular",Font.PLAIN, 24);
         setBackground(Color.WHITE);
         this.organelles = orgs;
+        addMouseListener(this);
         gameLoop = new Thread(this);
         gameLoop.start();
     }
@@ -35,6 +50,9 @@ public class Screen extends JPanel implements Runnable{
                 x.draw(g2d);
             }
         });
+        g2d.setFont(font);
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(text,10,50);
         //organelles.forEach(x->g2d.draw(x.hitbox));
         if (guides) {guide(g2d);}
         //g2d.setColor(Color.ORANGE);
@@ -63,5 +81,32 @@ public class Screen extends JPanel implements Runnable{
                 }
             }
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (organelles.get(2).hitbox.contains(e.getX(),e.getY()) && organelles.get(2).visible){
+            organelles.forEach(x->x.visible = false);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
