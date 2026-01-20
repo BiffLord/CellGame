@@ -16,7 +16,11 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     public Thread gameLoop;
     private final boolean guides = false;
     Font font;
-    private String text = "You need ATP Energy. Click the Cytoplasm";
+    Font resoruces;
+    byte GUI = -128;
+    private String text = "You need ATP Energy. Click the Cytoplasm to discover Glycolysis";
+    private static final Color cytolasm = new Color(147,168,212);
+    private Polygon[] moveables = new Polygon[1];
 
     public Screen(List<Organelle> orgs){
         try{
@@ -40,24 +44,57 @@ public class Screen extends JPanel implements Runnable, MouseListener {
             g2d.drawLine(0,coordinate,800,coordinate);
         }
     }
+    private Polygon sugar(int x, int y, int radius, int points){
+        //K'th angle  = originalAngel +(2(PI)(K)/sides)
+        Polygon polygon = new Polygon();
+        double angle = Math.toRadians(0);
+        for (int k = 0; k < points; k++){
+            double currentAngle = angle + ((2*Math.PI*k)/points);
+            polygon.addPoint((int) (x+(radius*Math.cos(currentAngle))), (int) (y+(radius*Math.sin(currentAngle))));
+        }
+        return polygon;
+    }
+    private void update(){
+        switch (GUI){
+            case -127:
+                switch (moveables.length){
+                    case 1:
+                        if(moveables[0].getBounds().x+ moveables[0].getBounds().width/2 <400){
+                            moveables[0].translate(1,0);}
+                        else{text = "So it Splits into two pyruvate...";
+                            moveables = new Polygon[2];
+                            moveables[0] = sugar(400,350,50,6);
+                            moveables[1] = sugar(400,450,50,6);
+                        }break;
+                    case 2:
+                        if(moveables[0].getBounds().x+ moveables[0].getBounds().width/2 < 600){
+                            moveables[0].translate(1,-1);
+                            moveables[1].translate(1,1);
+                        }else{
+                        }
+                        break;
+                }
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        organelles.forEach(x -> {
-            if (x.visible) {
-                x.draw(g2d);
-            }
-        });
         g2d.setFont(font);
         g2d.setColor(Color.BLACK);
-        g2d.drawString(text,10,50);
-        //organelles.forEach(x->g2d.draw(x.hitbox));
+        g2d.drawString(text, 10, 50);
         if (guides) {guide(g2d);}
-        //g2d.setColor(Color.ORANGE);
-        //g2d.draw(organelles.get(6).hitbox);
-        //organelles.forEach(x->g2d.draw(x.hitbox));
+        if (GUI == -128) {
+            organelles.forEach(x -> x.draw(g2d));
+
+            g2d.setColor(Color.ORANGE);organelles.forEach(x->g2d.draw(x.hitbox));
+        }
+        else if (GUI == -127) {
+            this.setBackground(cytolasm);
+            g2d.setColor(Color.DARK_GRAY);
+            for (Polygon p: moveables){g2d.fill(p);}
+        }
         g2d.dispose();
         g.dispose();
     }
@@ -66,6 +103,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     public void run() {
         while (gameLoop != null){
             long startTime = System.nanoTime();
+            update();
             repaint();
             long endTime = System.nanoTime();
             long n;
@@ -85,8 +123,10 @@ public class Screen extends JPanel implements Runnable, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (organelles.get(2).hitbox.contains(e.getX(),e.getY()) && organelles.get(2).visible){
-            organelles.forEach(x->x.visible = false);
+        switch (GUI){
+            case -128:
+                if (organelles.get(0).hitbox.contains(e.getX(),e.getY())){GUI = -127;text = "Glucose is too complex and big to enter the mitochondria";}
+                moveables[0] =sugar(150,400,100,6);
         }
     }
 
