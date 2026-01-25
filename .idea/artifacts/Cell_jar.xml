@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cell:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cell_jar</output-path>
+    <root id="archive" name="Cell.jar">
+      <element id="module-output" name="Cell" />
+    </root>
+  </artifact>
+</component>

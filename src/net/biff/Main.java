@@ -3,11 +3,21 @@ package net.biff;
 import net.biff.organelles.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main{
     public static void main(String[] args) {
+        try{
+            InputStream fontFile = Screen.class.getResourceAsStream("/texgyretermes-regular.otf");
+            assert fontFile != null;
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, fontFile));
+        } catch (IOException | FontFormatException e) {
+            throw new RuntimeException(e);
+        }
         List<Organelle> organelles = new ArrayList<>();
         organelles.add(new Cytoplasm());
         organelles.add(new Membrane());
