@@ -4,19 +4,15 @@
 A game about cells
 
 ## Done
-* Graphics of:
-  * Membrane
-  * Mitochondrion
-  * Neucleus (I can't spell)
-  * RER
-  * SER (These last two have left me dead help lol)
-  * Golgi Aparatus
-  * Ribosomes
-  * Lysosomes
-  * Centriole
-## Parts-to be
+* Graphics of organelles 
+* Glycolysis Demo
+## Parts-to be?
 * Protien Synthesis
 * Organelles & Function (animal Cell)
 * Mitosis
-* Somewhat of an Idle Game
+* Somewhat of an Idle Game?
+## GUIs
+The code stores a byte called GUI containing a number representing the GUI to be drawn up.  
+-128: Standard (the cell itself)
+-127 Glycolysis Demo
 
