@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 
 public abstract class Organelle {
     public Shape hitbox;
-    public static boolean visible = true;
     public static BasicStroke smallestStroke = new BasicStroke(1f);
     public static BasicStroke smallStroke = new BasicStroke(7f);
     public static BasicStroke stroke = new BasicStroke(10.0f);

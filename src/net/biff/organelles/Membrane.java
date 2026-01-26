@@ -8,7 +8,6 @@ public class Membrane extends Organelle{
         int radius = 600;
         int coordinate = 400 - radius/2;
         hitbox = new Ellipse2D.Double(coordinate,coordinate,radius,radius);
-        visible = true;
     }
     @Override
     public void draw(Graphics2D g2d) {

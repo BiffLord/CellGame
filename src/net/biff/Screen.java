@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.lang.Runnable;
 
@@ -15,17 +16,20 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     private final List<Organelle> organelles;
     public Thread gameLoop;
 
-    private final boolean guides = false;
+    private final boolean guides = !true;
     Font font;
 
     byte GUI = -128;
     private final int FPS = 60;
+    private byte tick = 0;
+    private final byte MAX_TICKS = 60;
 
     private static final Color cytoplasm = new Color(147,168,212);
     private static final Color NADH = new Color(93, 9, 224);
 
     private Shape[] moves = new Shape[1];
     TextBox[] texts = new TextBox[]{new TextBox("You need ATP Energy. Click the Cytoplasm to discover Glycolysis",(short)400, (short) 70,24)};
+    Rectangle2D[] buttons = new Rectangle2D[0];
 
     public Screen(List<Organelle> orgs){
         this.font = new Font("texgyretermes-regular",Font.PLAIN, 24);
@@ -42,10 +46,10 @@ public class Screen extends JPanel implements Runnable, MouseListener {
             g2d.drawLine(0,coordinate,800,coordinate);
         }
     }
-    private Polygon regularPolygon(int x, int y, int radius, int points){
+    private Shape regularPolygon(int x, int y, int radius, int points,double degrees){
         //K'th angle  = originalAngel +(2(PI)(K)/sides)
         Polygon polygon = new Polygon();
-        double angle = Math.toRadians(0);
+        double angle = Math.toRadians(degrees);
         for (int k = 0; k < points; k++){
             double currentAngle = angle + ((2*Math.PI*k)/points);
             polygon.addPoint((int) (x+(radius*Math.cos(currentAngle))), (int) (y+(radius*Math.sin(currentAngle))));
@@ -62,8 +66,8 @@ public class Screen extends JPanel implements Runnable, MouseListener {
                             moves[0] = translate.createTransformedShape(moves[0]);break;}
                         changeInstruction("So it Splits into two pyruvate...");
                         moves = new Shape[2];
-                        moves[0] = regularPolygon(400,350,50,6);
-                        moves[1] = regularPolygon(400,450,50,6);
+                        moves[0] = regularPolygon(400,350,50,6,45);
+                        moves[1] = regularPolygon(400,450,50,6,-45);
                         break;
                     case 2:
                         if(moves[0].getBounds().x+ moves[0].getBounds().width/2 < 600){
@@ -83,7 +87,13 @@ public class Screen extends JPanel implements Runnable, MouseListener {
                         addText("ATP", (short) 400, (short) 450,16);
                         addText("NADH", (short) 340, (short) 400,20);
                         addText("NADH", (short) 460, (short) 400,20);
+
                         break;
+                    default:
+                        if (tick == 19){
+                            addText("Back", (short)625, (short) 75,16);
+                            addButton(575,60,100,30);
+                        }
                 }
         }
     }
@@ -96,6 +106,14 @@ public class Screen extends JPanel implements Runnable, MouseListener {
         temp[texts.length] = new TextBox(text,x,y,size);
         texts = temp;
     }
+    private void addButton(int x, int y,int w, int h){
+        Rectangle2D[] temp = new Rectangle2D[buttons.length+1];
+        for (int i = 0; i<buttons.length;i++){
+            temp[i] = buttons[i];
+        }
+        temp[buttons.length] = new Rectangle2D.Double(x,y,w,h);
+        buttons = temp;
+    }
     private void changeInstruction(String text){
         texts[0].setText(text);
     }
@@ -107,7 +125,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
         g2d.setFont(font);
         g2d.setColor(Color.BLACK);
 
-        if (guides) {guide(g2d);}
+
         if (GUI == -128) {
             organelles.forEach(x -> x.draw(g2d));
 
@@ -118,10 +136,17 @@ public class Screen extends JPanel implements Runnable, MouseListener {
             for (int i = 0; i<moves.length;i++){
                 g2d.setColor((i<=1)? Color.DARK_GRAY:(i<=3)? Color.YELLOW:NADH);
                 g2d.fill(moves[i]);
+                for(Rectangle2D rect:buttons){
+                    g2d.setColor(Color.PINK);
+                    g2d.fill(rect);
+                    g2d.setColor(Color.ORANGE);
+                    g2d.draw(rect);
+                }
             }
         }
         g2d.setColor(Color.black);
         for (TextBox txbx:texts){txbx.draw(g2d);}
+        if (guides) {guide(g2d);}
         g2d.dispose();
         g.dispose();
     }
@@ -132,6 +157,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
             long startTime = System.nanoTime();
             update();
             repaint();
+            tick = (byte)((tick+1)%MAX_TICKS);
             long endTime = System.nanoTime();
             long n;
             long x;
@@ -149,11 +175,26 @@ public class Screen extends JPanel implements Runnable, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
         switch (GUI){
             case -128:
-                if (organelles.get(0).hitbox.contains(e.getX(),e.getY())){GUI = -127;changeInstruction("Glucose is too complex and big to enter the mitochondria");}
-                moves[0] = regularPolygon(150,400,100,6);
-                this.setBackground(cytoplasm);
+                if (organelles.get(0).hitbox.contains(x,y)){
+                    GUI = -127;
+                    changeInstruction("Glucose is too complex and big to enter the mitochondria");
+                    moves[0] = regularPolygon(150,400,100,6,0);
+                    this.setBackground(cytoplasm);
+                }
+            case -127:
+                for (Rectangle2D button : buttons){
+                    if (button.contains(x,y)){
+                        resetTexts();
+                        moves = new Shape[1];
+                        this.setBackground(Color.white);
+                        GUI = -128;
+                        buttons = new Rectangle2D[0];
+                    }
+                }
         }
     }
 
