@@ -1,19 +1,28 @@
 package net.biff;
 
+import net.biff.molecules.Macromolecule;
 import net.biff.organelles.Organelle;
+import net.biff.molecules.Stack;
 import net.biff.organelles.Vacuole;
 
-import javax.swing.*;
-import java.awt.*;
+
+import java.util.List;
+import java.lang.Runnable;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.Polygon;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
-import java.lang.Runnable;
 
-public class Screen extends JPanel implements Runnable, MouseListener {
+
+
+public class Screen extends JPanel implements Runnable{
     private final List<Organelle> organelles;
     public Thread gameLoop;
 
@@ -29,17 +38,21 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     private Shape[] moves = new Shape[1];
     TextBox[] texts = new TextBox[]{new TextBox("You need ATP Energy. Click the Cytoplasm to discover Glycolysis",(short)400, (short) 50,24)};
     Rectangle2D[] buttons = new Rectangle2D[0];
-    private final Vacuole vacoule;
+    public Stack[] inventory;
     public Screen(List<Organelle> orgs){
         setBackground(Color.WHITE);
         this.organelles = orgs;
-        addMouseListener(this);
-
+        addMouseListener(new MouseHandler());
+        inventory = new Stack[]{new Stack(Macromolecule.ATP,0),
+                new Stack(Macromolecule.CARBOHYDRATE,0),
+                new Stack(Macromolecule.PROTEIN,0),
+                new Stack(Macromolecule.LIPID,0),
+        };
         addText("ATP: 0", (short) 100, (short) 25,14);
         addText("CARBOHYDRATE: 0", (short) 300, (short) 25,14);
-        addText("PROTIEN: 0", (short) 500, (short) 25,14);
+        addText("PROTEIN: 0", (short) 500, (short) 25,14);
         addText("LIPID: 0", (short) 700, (short) 25,14);
-        vacoule = (Vacuole) organelles.get(10);
+        ((Vacuole)organelles.get(10)).inventory = inventory;
 
         gameLoop = new Thread(this);
         gameLoop.start();
@@ -129,7 +142,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     }
     private void resources(){
         for (int i = 0;i<4;i++){
-            texts[i+1].setText(vacoule.inventory[i].toString());
+            texts[i+1].setText(inventory[i].toString());
         }
     }
     @Override
@@ -185,48 +198,31 @@ public class Screen extends JPanel implements Runnable, MouseListener {
             }
         }
     }
+    private class MouseHandler extends MouseAdapter{
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            switch (GUI){
+                case -128:
+                    if (organelles.get(0).hitbox.contains(x,y)){
 
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        switch (GUI){
-            case -128:
-                if (organelles.get(0).hitbox.contains(x,y)){
-
-                    changeInstruction("Glucose is too complex and big to enter the mitochondria");
-                    moves[0] = regularPolygon(150,400,100,6,0);
-                    this.setBackground(cytoplasm);
-                    GUI = -127;
-                }
-            case -127:
-                for (Rectangle2D button : buttons){
-                    if (button.contains(x,y)){
-                        resetTexts();
-                        moves = new Shape[1];
-                        this.setBackground(Color.white);
-                        buttons = new Rectangle2D[0];
-                        GUI = -128;
+                        changeInstruction("Glucose is too complex and big to enter the mitochondria");
+                        moves[0] = regularPolygon(150,400,100,6,0);
+                        setBackground(cytoplasm);
+                        GUI = -127;
                     }
-                }
+                case -127:
+                    for (Rectangle2D button : buttons){
+                        if (button.contains(x,y)){
+                            resetTexts();
+                            moves = new Shape[1];
+                            setBackground(Color.white);
+                            buttons = new Rectangle2D[0];
+                            GUI = -128;
+                        }
+                    }
+            }
         }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

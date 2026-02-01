@@ -10,7 +10,7 @@ public class Vacuole extends Organelle{
     private static final Color color = new Color(133, 100, 179);
     public Stack atps = new Stack(Macromolecule.ATP,0);
     public Stack carbs = new Stack(Macromolecule.CARBOHYDRATE,0);
-    public Stack protiens = new Stack(Macromolecule.PROTIEN,0);
+    public Stack protiens = new Stack(Macromolecule.PROTEIN,0);
     public Stack lipids = new Stack(Macromolecule.LIPID,0);
     public Stack[] inventory = new Stack[]{atps,carbs,protiens,lipids};
     public Vacuole(int x, int y){
