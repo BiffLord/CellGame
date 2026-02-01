@@ -17,4 +17,9 @@ public class Stack {
     public void setCount(long stackSize){
         count = stackSize;
     }
+
+    @Override
+    public String toString(){
+        return molecule.name()+": "+count;
+    }
 }

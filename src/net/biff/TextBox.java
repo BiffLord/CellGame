@@ -38,4 +38,8 @@ public class TextBox {
         this.text = text;
         initializeX();
     }
+    @Override
+    public String toString(){
+        return text;
+    }
 }

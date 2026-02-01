@@ -1,6 +1,7 @@
 package net.biff;
 
 import net.biff.organelles.Organelle;
+import net.biff.organelles.Vacuole;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +17,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     private final List<Organelle> organelles;
     public Thread gameLoop;
 
-    private final boolean guides = !true;
-    Font font;
+    private final boolean guides = true;
 
     byte GUI = -128;
     private final int FPS = 60;
@@ -26,16 +26,21 @@ public class Screen extends JPanel implements Runnable, MouseListener {
 
     private static final Color cytoplasm = new Color(147,168,212);
     private static final Color NADH = new Color(93, 9, 224);
-
     private Shape[] moves = new Shape[1];
-    TextBox[] texts = new TextBox[]{new TextBox("You need ATP Energy. Click the Cytoplasm to discover Glycolysis",(short)400, (short) 70,24)};
+    TextBox[] texts = new TextBox[]{new TextBox("You need ATP Energy. Click the Cytoplasm to discover Glycolysis",(short)400, (short) 50,24)};
     Rectangle2D[] buttons = new Rectangle2D[0];
-
+    private final Vacuole vacoule;
     public Screen(List<Organelle> orgs){
-        this.font = new Font("texgyretermes-regular",Font.PLAIN, 24);
         setBackground(Color.WHITE);
         this.organelles = orgs;
         addMouseListener(this);
+
+        addText("ATP: 0", (short) 100, (short) 25,14);
+        addText("CARBOHYDRATE: 0", (short) 300, (short) 25,14);
+        addText("PROTIEN: 0", (short) 500, (short) 25,14);
+        addText("LIPID: 0", (short) 700, (short) 25,14);
+        vacoule = (Vacuole) organelles.get(10);
+
         gameLoop = new Thread(this);
         gameLoop.start();
     }
@@ -47,7 +52,7 @@ public class Screen extends JPanel implements Runnable, MouseListener {
         }
     }
     private Shape regularPolygon(int x, int y, int radius, int points,double degrees){
-        //K'th angle  = originalAngel +(2(PI)(K)/sides)
+        //K'th angle = originalAngel +(2(PI)(K)/sides)
         Polygon polygon = new Polygon();
         double angle = Math.toRadians(degrees);
         for (int k = 0; k < points; k++){
@@ -57,6 +62,10 @@ public class Screen extends JPanel implements Runnable, MouseListener {
         return polygon;
     }
     private void update(){
+        if (tick == 59){
+            resources();
+        }
+
         switch (GUI){
             case -127:
                 switch (moves.length){
@@ -83,21 +92,27 @@ public class Screen extends JPanel implements Runnable, MouseListener {
                         moves[4] = new Ellipse2D.Double(300,360,80,80);
                         moves[5] = new Ellipse2D.Double(420,360,80,80);
 
-                        addText("ATP", (short) 400, (short) 350,16);
-                        addText("ATP", (short) 400, (short) 450,16);
-                        addText("NADH", (short) 340, (short) 400,20);
-                        addText("NADH", (short) 460, (short) 400,20);
+                        addText("ATP: ", (short) 400, (short) 350,16);
+                        addText("ATP: ", (short) 400, (short) 450,16);
+                        addText("NADH: ", (short) 340, (short) 400,20);
+                        addText("NADH: ", (short) 460, (short) 400,20);
 
                         break;
                     default:
-                        if (tick == 19){
+                        if ((tick+1)%20==0){
                             addText("Back", (short)625, (short) 75,16);
                             addButton(575,60,100,30);
+                            vacoule.atps.setCount(vacoule.atps.getCount()+2);
                         }
                 }
         }
     }
-    private void resetTexts(){texts = new TextBox[]{texts[0]};}
+    private void resetTexts(){texts = new TextBox[]{texts[0],
+            texts[1],
+            texts[2],
+            texts[3],
+            texts[4]};
+    }
     private void addText(String text, short x, short y, int size){
         TextBox[] temp = new TextBox[texts.length+1];
         for (int i = 0; i<texts.length;i++){
@@ -117,12 +132,15 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     private void changeInstruction(String text){
         texts[0].setText(text);
     }
-
+    private void resources(){
+        for (int i = 0;i<4;i++){
+            texts[i+1].setText(vacoule.inventory[i].toString());
+        }
+    }
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setFont(font);
         g2d.setColor(Color.BLACK);
 
 
