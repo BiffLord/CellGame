@@ -99,10 +99,9 @@ public class Screen extends JPanel implements Runnable, MouseListener {
 
                         break;
                     default:
-                        if ((tick+1)%20==0){
+                        if ((tick+1)%20==0 && buttons.length==0){
                             addText("Back", (short)625, (short) 75,16);
                             addButton(575,60,100,30);
-                            vacoule.atps.setCount(vacoule.atps.getCount()+2);
                         }
                 }
         }
@@ -115,17 +114,13 @@ public class Screen extends JPanel implements Runnable, MouseListener {
     }
     private void addText(String text, short x, short y, int size){
         TextBox[] temp = new TextBox[texts.length+1];
-        for (int i = 0; i<texts.length;i++){
-            temp[i] = texts[i];
-        }
+        System.arraycopy(texts, 0, temp, 0, texts.length);
         temp[texts.length] = new TextBox(text,x,y,size);
         texts = temp;
     }
     private void addButton(int x, int y,int w, int h){
         Rectangle2D[] temp = new Rectangle2D[buttons.length+1];
-        for (int i = 0; i<buttons.length;i++){
-            temp[i] = buttons[i];
-        }
+        System.arraycopy(buttons, 0, temp, 0, buttons.length);
         temp[buttons.length] = new Rectangle2D.Double(x,y,w,h);
         buttons = temp;
     }
