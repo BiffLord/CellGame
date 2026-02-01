@@ -198,10 +198,11 @@ public class Screen extends JPanel implements Runnable, MouseListener {
         switch (GUI){
             case -128:
                 if (organelles.get(0).hitbox.contains(x,y)){
-                    GUI = -127;
+
                     changeInstruction("Glucose is too complex and big to enter the mitochondria");
                     moves[0] = regularPolygon(150,400,100,6,0);
                     this.setBackground(cytoplasm);
+                    GUI = -127;
                 }
             case -127:
                 for (Rectangle2D button : buttons){
@@ -209,8 +210,8 @@ public class Screen extends JPanel implements Runnable, MouseListener {
                         resetTexts();
                         moves = new Shape[1];
                         this.setBackground(Color.white);
-                        GUI = -128;
                         buttons = new Rectangle2D[0];
+                        GUI = -128;
                     }
                 }
         }
